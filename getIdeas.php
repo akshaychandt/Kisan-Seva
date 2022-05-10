@@ -8,8 +8,8 @@ $result    = mysqli_query($conn,"SELECT * FROM `$table` WHERE id='$id'");
 if(mysqli_num_rows($result)) {
 $row       = mysqli_fetch_assoc($result); 
 $data      = array(
-'fertilizer'                       => $row['fertilizer'],
-'usage'                            => $row['usage'],
+'ideas'                           => $row['ideas'],
+'date'                            => $row['date'],
 );  
 echo json_encode($data);
 }

@@ -62,11 +62,11 @@
                      <div class="form-group">
                         <label class="col-sm-2 control-label">Reply</label>
                         <div class="col-sm-10">
-                            <input type="hidden" id="hiddenId" value="">
+                           <input type="hidden" id="hiddenId" value="">
                            <textarea class="form-control" id="reply" rows="6"></textarea>
                         </div>
                      </div>
-                 </div>
+                  </div>
                   <div class="modal-footer">
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                      <button type="button" class="btn btn-primary" onclick="saveComplaints()">Save</button>
@@ -81,7 +81,6 @@
       <div class="content-wrap">
          <div class="main">
             <div class="container-fluid">
-
                <section id="main-content">
                   <div class="row">
                      <div class="table-responsive">
@@ -105,13 +104,13 @@
                                  </td>
                                  <td>
                                     <?php
-                                 if($data['reply'] != '' ){?>
+                                       if($data['reply'] != '' ){?>
                                     <a href="#" class="btn btn-success" name="editStaff" onclick="viewReply(<?php echo $data['id'];?>)">View Reply</a>
                                     <?php }
-                                    else{?>
-
+                                       else{?>
                                     <a href="#" class="btn btn-success" name="editStaff" onclick="reply(<?php echo $data['id'];?>)">Reply</a>
-                                    <?php } ?></td>
+                                    <?php } ?>
+                                 </td>
                               </tr>
                               </tr>
                               <?php } ?>
@@ -140,56 +139,56 @@
       </script>
       <!--===============================================================================================-->
       <script>
-      function viewReply(id) { 
-        // App.initblockUI();
-        var table   = 'complaints_tb';
-         $.ajax({
-         url: 'getReply.php',
-         type: 'POST',
-         dataType:'',
-         data: {
-         'hiddenId'     : id,
-         'table'        : table
-         },
-         success: function(data){ 
-         
-            if(data.status == '0'){
-               toastr.error(data.message,"Error");
+         function viewReply(id) { 
+           // App.initblockUI();
+           var table   = 'complaints_tb';
+            $.ajax({
+            url: 'getReply.php',
+            type: 'POST',
+            dataType:'',
+            data: {
+            'hiddenId'     : id,
+            'table'        : table
+            },
+            success: function(data){ 
+            
+               if(data.status == '0'){
+                  toastr.error(data.message,"Error");
+               }
+               else { 
+                 arraydata=JSON.parse(data);
+               $('#reply').val(arraydata.reply);
+               $('#hiddenId').val(id);
+               $('#submitBtn').val('Save');
+               $('#replyModal').modal({
+                     backdrop: 'static',
+                        keyboard: false
+                  });
+               $('#replyModal .modal-title').html('Edit reply');                   
+                  // App.initunblockUI(); 
+              }
+            },
+            error : function(xhr, textStatus, errorThrown) {
+             if (xhr.status === 0) {
+               alert('Not connected. Verify Network.');
+             } else if (xhr.status == 404) {
+               alert('Requested page not found. [404]');
+             } else if (xhr.status == 500) {
+               alert('Server Error [500].'); 
+             } else if (errorThrown === 'parsererror') {
+               alert('Requested JSON parse failed.');
+             } else if (errorThrown === 'timeout') {
+               alert('Time out error.');
+             } else if (errorThrown === 'abort') {
+               alert('Ajax request aborted.');
+             } else {
+               alert('Remote sever unavailable. Please try later');
+             }
             }
-            else { 
-              arraydata=JSON.parse(data);
-            $('#reply').val(arraydata.reply);
-            $('#hiddenId').val(id);
-            $('#submitBtn').val('Save');
-            $('#replyModal').modal({
-                  backdrop: 'static',
-                     keyboard: false
-               });
-            $('#replyModal .modal-title').html('Edit reply');                   
-               // App.initunblockUI(); 
-           }
-         },
-         error : function(xhr, textStatus, errorThrown) {
-          if (xhr.status === 0) {
-            alert('Not connected. Verify Network.');
-          } else if (xhr.status == 404) {
-            alert('Requested page not found. [404]');
-          } else if (xhr.status == 500) {
-            alert('Server Error [500].'); 
-          } else if (errorThrown === 'parsererror') {
-            alert('Requested JSON parse failed.');
-          } else if (errorThrown === 'timeout') {
-            alert('Time out error.');
-          } else if (errorThrown === 'abort') {
-            alert('Ajax request aborted.');
-          } else {
-            alert('Remote sever unavailable. Please try later');
-          }
-         }
-         });
-         }
-    </script>
-    <!--===============================================================================================-->
+            });
+            }
+      </script>
+      <!--===============================================================================================-->
       <script>
          function saveComplaints() {
          var reply                = $('#reply').val();

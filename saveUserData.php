@@ -24,6 +24,12 @@ if ($role == "Admin") {
 	$result=mysqli_query($conn,"UPDATE `$table` SET `name`='$name',`email`='$email',`phone`='$phone'WHERE id='$id'");
 	$output = "Data Updated";
 }
+else{
+	$query=mysqli_query($conn,"INSERT INTO `login_tb`(`username`, `password`, `role`) VALUES ('$username','$password','$role')");
+	$login_id=mysqli_insert_id($conn);
+	$result=mysqli_query($conn,"INSERT INTO `$table`( `login_id`,`name`, `email`, `phone`) VALUES ('$login_id','$name','$email','$phone')");
+	$output = "Data Inserted";
+}
 }
 else{
 if ($id <> '') {
@@ -31,7 +37,7 @@ if ($id <> '') {
 	$output = "Data Updated";
 }
 else{
-	$query=mysqli_query($conn,"INSERT INTO `login_tb`(`username`, `password`, `role`) VALUES ('$username','$password','Agriculture Officer')");
+	$query=mysqli_query($conn,"INSERT INTO `login_tb`(`username`, `password`, `role`) VALUES ('$username','$password','$role')");
 	$login_id=mysqli_insert_id($conn);
 	$result=mysqli_query($conn,"INSERT INTO `$table`( `login_id`,`name`, `email`, `phone`) VALUES ('$login_id','$name','$email','$phone')");
 	$output = "Data Inserted";

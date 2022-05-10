@@ -1,7 +1,7 @@
-<?php 
+<?php
    session_start();
    include 'connection.php';
-   $notification=mysqli_query($conn,"SELECT * FROM `notifications_tb` WHERE record_status='1'");
+   $ideas=mysqli_query($conn,"SELECT * FROM `ideas_tb` WHERE record_status='1'");
    
    ?>
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Notifications</title>
+      <title>Ideas</title>
       <!-- ================= Favicon ================== -->
       <!-- Standard -->
       <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff">
@@ -50,7 +50,7 @@
             <div class="modal-dialog modal-lg" role="document">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h5 class="modal-title" id="exampleModalLabel">Add Notification</h5>
+                     <h5 class="modal-title" id="exampleModalLabel">Add Ideas</h5>
                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                      </button>
@@ -61,14 +61,14 @@
                         <input type="date" class="form-control input-sm" name="date" id="date" value="<?php print(date("Y-m-d")); ?>">
                      </div>
                      <div class="form-group">
-                        <label class="control-label col-md-5">Notification</label>
+                        <label class="control-label col-md-5">Ideas</label>
                         <input type="hidden" id="hiddenId" value="">
-                        <textarea class="form-control" id="notification" rows="6"></textarea>
+                        <textarea class="form-control" id="ideas" rows="6"></textarea>
                      </div>
                   </div>
                   <div class="modal-footer">
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                     <button type="button" class="btn btn-primary" onclick="saveNotifications()">Save</button>
+                     <button type="button" class="btn btn-primary" onclick="saveIdeas()">Save</button>
                   </div>
                </div>
             </div>
@@ -81,31 +81,31 @@
             <div class="container-fluid">
                <section id="main-content">
                   <div class="row">
-                     <button style="float: right;" class="btn btn-success" onclick="populateAddModal()">Add Notification</button>
+                     <button style="float: right;" class="btn btn-success" onclick="populateAddModal()">Add Ideas</button>
                   </div>
                   <div class="row">
                      <div class="table-responsive">
-                        <table class="table table-striped" id="notification_table">
+                        <table class="table table-striped" id="ideas_table">
                            <thead>
                               <tr>
                                  <th>#</th>
                                  <th>Date</th>
-                                 <th>Notification</th>
+                                 <th>Ideas</th>
                                  <th>Action <i class="fa fa-cogs"></i></th>
                               </tr>
                            </thead>
                            <tbody>
                               <?php
-                                 while ($data=mysqli_fetch_assoc($notification)) {
+                                 while ($data=mysqli_fetch_assoc($ideas)) {
                                     $originalDate=$data['date'];
                                     $Date = date("d-m-Y", strtotime($originalDate));
                                  ?>
                               <tr>
                                  <th scope="row"><?php echo $data['id'];?></th>
                                  <td><?php echo $Date;?></td>
-                                 <td><?php echo $data['notification'];?></td>
-                                 <td><a href="#" class="btn btn-success" name="editNotification" onclick="editNotification(<?php echo $data['id'];?>)">Edit</a>
-                                    <a href="#" class="btn btn-danger" name="deleteNotification" onclick="deleteNotificationData(<?php echo $data['id'];?>)">Delete</a>
+                                 <td><?php echo $data['ideas'];?></td>
+                                 <td><a href="#" class="btn btn-success" name="editIdeas" onclick="editIdeas(<?php echo $data['id'];?>)">Edit</a>
+                                    <a href="#" class="btn btn-danger" name="deleteIdeas" onclick="deleteIdeasData(<?php echo $data['id'];?>)">Delete</a>
                                  </td>
                               </tr>
                               <?php } ?>
@@ -122,12 +122,7 @@
       <script>
          function populateAddModal() 
          { 
-               $('#name').val('');
-               $('#username').val('');
-               $('#email').val('');
-               $('#hiddenId').val('');
-               $('#password').val('');
-               $('#cpassword').val('');
+               $('#ideas').val('');
                $('#hiddenId').val('');
                $('#submitBtn').val('Save');
                $('#addModal').modal({
@@ -137,11 +132,11 @@
       </script>
       <!--===============================================================================================-->
       <script>
-         function editNotification(id) { 
+         function editIdeas(id) { 
            // App.initblockUI();
-            var table    = 'notifications_tb';
+            var table    = 'ideas_tb';
             $.ajax({
-            url: 'getNotification.php',
+            url: 'getIdeas.php',
             type: 'POST',
             dataType:'',
             data: {
@@ -156,14 +151,14 @@
                else { 
                  arraydata=JSON.parse(data);
                $('#date').val(arraydata.date);
-               $('#notification').val(arraydata.notification);
+               $('#ideas').val(arraydata.ideas);
                $('#hiddenId').val(id);
                $('#submitBtn').val('Save');
                $('#addModal').modal({
                      backdrop: 'static',
                         keyboard: false
                   });
-               $('#addModal .modal-title').html('Edit Notification');                   
+               $('#addModal .modal-title').html('Edit Ideas');                   
                   // App.initunblockUI(); 
               }
             },
@@ -189,28 +184,28 @@
       </script>
       <!--===============================================================================================-->
       <script>
-         function saveNotifications() {
+         function saveIdeas() {
          var date                = $('#date').val();
-         var notification        = $('#notification').val();
+         var ideas               = $('#ideas').val();
          var hiddenId            = $('#hiddenId').val();
          if(!Validate()) {
          return false;
          }
          else {
          // App.initblockUI();
-         var table   = 'notifications_tb';
+         var table   = 'ideas_tb';
          $.ajax({
-           url:'saveNotification.php',
+           url:'saveIdeas.php',
            type: 'POST',
            dataType:'',
            data: {
                'date'            : date,
-               'notification'    : notification,
+               'ideas'           : ideas,
                'hiddenId'        : hiddenId,
                'table'           : table
                },
             success: function(data){
-               $( "#notification_table" ).load( "notificationmanagement.php #notification_table" );
+               $( "#ideas_table" ).load( "ideas.php #ideas_table" );
                $('#addModal').modal('hide');
                toastr.success(data,"Success");
                // alert(data);
@@ -245,7 +240,7 @@
          $('input').removeClass('error');
          $('select').removeClass('error');
          //Validate required fields
-         required = ["date","notification"];
+         required = ["date","ideas"];
          
          for (i=0;i<required.length;i++) {
          var input = $('#'+required[i]);
@@ -269,13 +264,13 @@
       </script>
       <!--===============================================================================================-->
       <script>
-         function deleteNotificationData(id) {
+         function deleteIdeasData(id) {
                if(confirm("Are you sure to delete!")){
-                     deleteNotificationDetails(id);
+                     deleteIdeasDetails(id);
                }
          }
-         function deleteNotificationDetails(id) {
-            var table = 'notifications_tb';
+         function deleteIdeasDetails(id) {
+            var table = 'ideas_tb';
          $.ajax({
                      url:        'deleteData.php',
                      type:       'POST',
@@ -286,7 +281,7 @@
                       },
                      success: function(data, status){
                            // toastr.success(data,"Success");
-                           $( "#notification_table" ).load( "notificationmanagement.php #notification_table" );
+                           $( "#ideas_table" ).load( "ideas.php #ideas_table" );
                      },
                      error : function(xhr, textStatus, errorThrown) {
                            if (xhr.status === 0) {

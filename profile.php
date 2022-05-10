@@ -1,4 +1,4 @@
-<?php 
+<?php  
    session_start();
    $id = $_SESSION['id'];
    $role = $_SESSION['role'];
@@ -13,6 +13,7 @@
    }
    include 'connection.php';
    $query=mysqli_query($conn,"SELECT * FROM `$table` WHERE login_id='$id'");
+   
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -134,44 +135,44 @@
                                  <div class="row">
                                     <div class="col-lg-8">
                                        <table id="profile_table">
-                                        <tbody>
-                                          <div class="custom-tab user-profile-tab">
-                                             <ul class="nav nav-tabs" role="tablist">
-                                                <li role="presentation" class="active">
-                                                   <a href="#1" aria-controls="1" role="tab" data-toggle="tab">About</a>
-                                                </li>
-                                             </ul>
-                                             <?php
-                                                while ($data=mysqli_fetch_assoc($query)) {
-                                                ?>
-                                             <div class="tab-content">
-                                                <div role="tabpanel" class="tab-pane active" id="1">
-                                                   <div class="basic-information">
-                                                      <h4>Basic information</h4>
-                                                      <div class="name-content">
-                                                         <span class="contact-title">Name:</span>
-                                                         <span class="birth-date"><?php echo $data['name'];?></span>
+                                          <tbody>
+                                             <div class="custom-tab user-profile-tab">
+                                                <ul class="nav nav-tabs" role="tablist">
+                                                   <li role="presentation" class="active">
+                                                      <a href="#1" aria-controls="1" role="tab" data-toggle="tab">About</a>
+                                                   </li>
+                                                </ul>
+                                                <?php
+                                                   while ($data=mysqli_fetch_assoc($query)) {
+                                                   ?>
+                                                <div class="tab-content">
+                                                   <div role="tabpanel" class="tab-pane active" id="1">
+                                                      <div class="basic-information">
+                                                         <h4>Basic information</h4>
+                                                         <div class="name-content">
+                                                            <span class="contact-title">Name:</span>
+                                                            <span class="birth-date"><?php echo $data['name'];?></span>
+                                                         </div>
                                                       </div>
-                                                   </div>
-                                                   <div class="contact-information">
-                                                      <h4>Contact information</h4>
-                                                      <div class="email-content">
-                                                         <span class="contact-title">Email:</span>
-                                                         <span class="contact-email"><?php echo $data['email'];?></span>
-                                                      </div>
-                                                      <div class="phone-content">
-                                                         <span class="contact-title">Phone:</span>
-                                                         <span class="phone-number"><?php echo $data['phone'];?></span>
-                                                      </div>
-                                                      <div>
-                                                         <button class="btn btn-primary" onclick="editAdminDetails(<?php echo $data['id'];?>)">Edit</button>
+                                                      <div class="contact-information">
+                                                         <h4>Contact information</h4>
+                                                         <div class="email-content">
+                                                            <span class="contact-title">Email:</span>
+                                                            <span class="contact-email"><?php echo $data['email'];?></span>
+                                                         </div>
+                                                         <div class="phone-content">
+                                                            <span class="contact-title">Phone:</span>
+                                                            <span class="phone-number"><?php echo $data['phone'];?></span>
+                                                         </div>
+                                                         <div>
+                                                            <button class="btn btn-primary" onclick="editAdminDetails(<?php echo $data['id'];?>)">Edit</button>
+                                                         </div>
                                                       </div>
                                                    </div>
                                                 </div>
+                                                <?php } ?>
                                              </div>
-                                             <?php } ?>
-                                          </div>
-                                        </tbody>
+                                          </tbody>
                                        </table>
                                     </div>
                                  </div>
@@ -260,7 +261,7 @@
                'role'            : role,
                },
             success: function(data){
-               $( "#profilediv" ).load( "profile.php #profile_table" );
+               $( "#profile_table" ).load( "profile.php #profile_table" );
                $('#adminModal').modal('hide');
                toastr.success(data,"Success");
                // alert(data);

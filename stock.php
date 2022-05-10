@@ -2,6 +2,7 @@
    session_start();
    include 'connection.php';
    $stock=mysqli_query($conn,"SELECT * FROM `stock_tb` WHERE record_status='1'");
+   
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,19 +56,19 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                           <div class="form-group">
-                              <label class="control-label col-md-5">Date</label>
-                              <input type="date" class="form-control input-sm" name="date" id="date" value="<?php print(date("Y-m-d")); ?>">
-                           </div>
-                           <div class="form-group">
-                              <label class="control-label col-md-5">Stock</label>
-                              <input type="text"class="form-control input-sm" name="stock" id="stock">
-                           </div>
-                           <div class="form-group">
-                              <label class="control-label col-md-5">Quantity</label>
-                              <input type="hidden" id="hiddenId" value="">
-                              <input type="text" class="form-control input-sm" name="quantity" id="quantity">
-                           </div>
+                     <div class="form-group">
+                        <label class="control-label col-md-5">Date</label>
+                        <input type="date" class="form-control input-sm" name="date" id="date" value="<?php print(date("Y-m-d")); ?>">
+                     </div>
+                     <div class="form-group">
+                        <label class="control-label col-md-5">Stock</label>
+                        <input type="text"class="form-control input-sm" name="stock" id="stock">
+                     </div>
+                     <div class="form-group">
+                        <label class="control-label col-md-5">Quantity</label>
+                        <input type="hidden" id="hiddenId" value="">
+                        <input type="text" class="form-control input-sm" name="quantity" id="quantity">
+                     </div>
                   </div>
                   <div class="modal-footer">
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -79,11 +80,9 @@
       </form>
       <!-- End ADD Modal -->
       <!--===============================================================================================--> 
-      
       <div class="content-wrap">
          <div class="main">
             <div class="container-fluid">
-               
                <section id="main-content">
                   <div class="row">
                      <button style="float: right;" class="btn btn-success" onclick="populateAddModal()">Add Stock</button>
@@ -110,7 +109,7 @@
                                  <th scope="row"><?php echo $data['id'];?></th>
                                  <td><?php echo $Date;?></td>
                                  <td><?php echo $data['stock'];?></td>
-                                  <td><?php echo $data['quantity'];?></td>
+                                 <td><?php echo $data['quantity'];?></td>
                                  <td><a href="#" class="btn btn-success" name="editStock" onclick="editStock(<?php echo $data['id'];?>)">Edit</a>
                                     <a href="#" class="btn btn-danger" name="deleteStock" onclick="deleteStockData(<?php echo $data['id'];?>)">Delete</a>
                                  </td>
@@ -191,7 +190,7 @@
             }
       </script>
       <!--===============================================================================================-->
-       <script>
+      <script>
          function saveStocks() {
          var date                = $('#date').val();
          var stock               = $('#stock').val();
@@ -273,7 +272,7 @@
          }
       </script>
       <!--===============================================================================================-->
-       <script>
+      <script>
          function deleteStockData(id) {
                if(confirm("Are you sure to delete!")){
                      deleteStockDetails(id);

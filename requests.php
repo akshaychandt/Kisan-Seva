@@ -1,7 +1,8 @@
-<?php 
+<?php  
    session_start();
    include 'connection.php';
    $officer=mysqli_query($conn,"SELECT request_tb.id,request_tb.request_status,login_tb.username FROM request_tb JOIN login_tb ON request_tb.user_id = login_tb.id WHERE request_tb.request_status = 1");
+   
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +47,6 @@
       <div class="content-wrap">
          <div class="main">
             <div class="container-fluid">
-
                <section id="main-content">
                   <div class="row">
                      <div class="table-responsive">
@@ -68,10 +68,8 @@
                                  </td>
                                  <td>
                                     <a href="#" class="btn btn-success" name="editStaff" onclick="acceptRequest(<?php echo $data['id'];?>)">Accept</a>
-                                   
-
                                     <a href="#" class="btn btn-danger" name="editStaff" onclick="rejectRequest(<?php echo $data['id'];?>)">Reject</a>
-                                    </td>
+                                 </td>
                               </tr>
                               </tr>
                               <?php } ?>

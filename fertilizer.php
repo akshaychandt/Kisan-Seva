@@ -2,6 +2,7 @@
    session_start();
    include 'connection.php';
    $fertilizer=mysqli_query($conn,"SELECT * FROM `fertilizer_tb` WHERE record_status='1'");
+   
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,15 +57,15 @@
                      </button>
                   </div>
                   <div class="modal-body">
-                           <div class="form-group">
-                              <label class="control-label col-md-5">Fertilizer</label>
-                              <input type="hidden" id="hiddenId" value="">`   
-                              <textarea class="form-control" id="fertilizer" rows="6"></textarea>
-                           </div>
-                           <div class="form-group">
-                              <label class="control-label col-md-5">Usage</label>
-                              <textarea class="form-control" id="usage" rows="6"></textarea>
-                           </div>
+                     <div class="form-group">
+                        <label class="control-label col-md-5">Fertilizer</label>
+                        <input type="hidden" id="hiddenId" value="">`   
+                        <textarea class="form-control" id="fertilizer" rows="6"></textarea>
+                     </div>
+                     <div class="form-group">
+                        <label class="control-label col-md-5">Usage</label>
+                        <textarea class="form-control" id="usage" rows="6"></textarea>
+                     </div>
                   </div>
                   <div class="modal-footer">
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -76,11 +77,9 @@
       </form>
       <!-- End ADD Modal -->
       <!--===============================================================================================--> 
-      
       <div class="content-wrap">
          <div class="main">
             <div class="container-fluid">
-               
                <section id="main-content">
                   <div class="row">
                      <button style="float: right;" class="btn btn-success" onclick="populateAddModal()">Add Fertilizer</button>
@@ -103,7 +102,7 @@
                               <tr>
                                  <th scope="row"><?php echo $data['id'];?></th>
                                  <td><?php echo $data['fertilizer'];?></td>
-                                  <td><?php echo $data['usage'];?></td>
+                                 <td><?php echo $data['usage'];?></td>
                                  <td><a href="#" class="btn btn-success" name="editFertilizer" onclick="editFertilizer(<?php echo $data['id'];?>)">Edit</a>
                                     <a href="#" class="btn btn-danger" name="deleteFertilizer" onclick="deleteFertilizerData(<?php echo $data['id'];?>)">Delete</a>
                                  </td>
@@ -184,7 +183,7 @@
             }
       </script>
       <!--===============================================================================================-->
-       <script>
+      <script>
          function saveFertilizer() {
          var fertilizer           = $('#fertilizer').val();
          var usage               = $('#usage').val();
@@ -264,7 +263,7 @@
          }
       </script>
       <!--===============================================================================================-->
-       <script>
+      <script>
          function deleteFertilizerData(id) {
                if(confirm("Are you sure to delete!")){
                      deleteFertilizerDetails(id);
